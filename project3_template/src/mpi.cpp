@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <chrono>
-#include <mpi.h>
+//#include <mpi.h>
+#include "/usr/include/mpich-3.2-x86_64/mpi.h"
 
 #ifdef GUI
 #include <GL/glut.h>
@@ -68,7 +69,7 @@ void master() {
 
     generate_data(total_m, total_x, total_y, total_vx, total_vy, n_body);
 
-    Logger l = Logger("sequential", n_body, bound_x, bound_y);
+    Logger l = Logger("MPI", n_body, bound_x, bound_y);
 
     for (int i = 0; i < n_iteration; i++){
         std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();

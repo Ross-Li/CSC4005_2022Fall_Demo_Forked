@@ -72,7 +72,7 @@ void master(){
 
     generate_data(m, x, y, vx, vy, n_body);
 
-    Logger l = Logger("sequential", n_body, bound_x, bound_y);
+    Logger l = Logger("pthread", n_body, bound_x, bound_y);
 
     for (int i = 0; i < n_iteration; i++){
         std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();

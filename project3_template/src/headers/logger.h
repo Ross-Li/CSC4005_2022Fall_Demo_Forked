@@ -57,10 +57,12 @@ Logger::Logger(const char* version_, int n_body_, int x_bound_, int y_bound_){
 
     time_t t = time(0);
     char tmp[32];
-    strftime(tmp, sizeof(tmp), "%Y%m%d%H%M%S",localtime(&t)); 
+    strftime(tmp, sizeof(tmp), "%m%d%H%M%S",localtime(&t)); 
     start_time = tmp;
 
+    // The path of the checkpoint file
     path = root_path + version + "_" + std::to_string(n_body) + "_" + start_time + "/";
+    // Print out the path of the checkpoint directory
     std::cout << path << std::endl;
 
     if (is_exist(root_path.c_str()) == 0) {
@@ -70,9 +72,9 @@ Logger::Logger(const char* version_, int n_body_, int x_bound_, int y_bound_){
     if (is_exist(path.c_str()) == 0) {
         int isCreate = mkdir(path.c_str(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRWXG | S_IRWXO);
         if (!isCreate){
-            std::cout << "directory creation success" << std::endl;
+            std::cout << "Directory creation success!" << std::endl;
         } else {
-            std::cout << "directory creation failed" << std::endl;
+            std::cout << "Directory creation failed" << std::endl;
         }
     }
 
@@ -82,7 +84,8 @@ Logger::Logger(const char* version_, int n_body_, int x_bound_, int y_bound_){
 void Logger::save_frame(double* x, double* y){
     std::setprecision(15);
     std::string f_path = path + "data.txt";
-    std::cout << path << std::endl;
+    //! Print out the path. Commented because I don't want to fill up my terminal.
+    // std::cout << path << std::endl;
     std::ofstream f(f_path, std::ios::app | std::ios::binary);
     for (int i = 0; i < n_body; i++){
         f << std::to_string(x[i]) << std::endl << std::to_string(y[i]) << std::endl;
